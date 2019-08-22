@@ -7,10 +7,14 @@ const UserForm = ({ errors, touched, values }) => {
     return (
         <div>
             <Form>
+                {touched.name && errors.name && <p>{errors.name}</p>}
                 <Field type="text" name="name" placeholder="Name" />
+                {touched.email && errors.email && <p>{errors.email}</p>}
                 <Field type="text" name="email" placeholder="Email" />
+                {touched.password && errors.password && <p>{errors.password}</p>}
                 <Field type="password" name="password" placeholder="Password" />
                 <label>
+                    {touched.terms && errors.terms && <p>{errors.terms}</p>}
                     Terms of Service:
                     <Field type="checkbox" name="terms" placeholder="Terms of Service" />
                 </label>
@@ -30,9 +34,9 @@ const FormickUserForm = withFormik({
         };
     },
     validationSchema: Yup.object().shape({
-        name: Yup.string().required(),
-        email: Yup.string().required(),
-        password: Yup.string().required(),
+        name: Yup.string().max(10, "Name connot be more than 10 characters!").required("Name is required!"),
+        email: Yup.string().email("Must be a valid email!").required("Email is required!"),
+        password: Yup.string().min(8, "Password must be atleast 8 characters!").required("Password is required!"),
         terms: Yup.string().required()
     }),
     handleSubmit(values, { setStatus }) {
