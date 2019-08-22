@@ -59,7 +59,7 @@ const FormickUserForm = withFormik({
         name: Yup.string().max(10, "Name connot be more than 10 characters!").required("Name is required!"),
         email: Yup.string().email("Must be a valid email!").required("Email is required!"),
         password: Yup.string().min(8, "Password must be atleast 8 characters!").required("Password is required!"),
-        terms: Yup.boolean().required("Terms of Service required!")
+        terms: Yup.boolean().oneOf([true], "Terms of Service required!")
     }),
     handleSubmit(values, { setStatus }) {
         axios
